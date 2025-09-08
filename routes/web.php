@@ -229,9 +229,12 @@ Route::middleware('auth')->group(function () {
         Route::get("/pages-maintenance", "pages_maintenance");
         Route::get("/pages-coming-soon", "pages_coming_soon");
         Route::get("/vipul-page", function() {
-            return Inertia::render('VipulPage/index');
+            return Inertia::render('VipulPage/index', [
+                'component' => 'VipulPage/index'
+            ]);
         });
     });
 });
 
 require __DIR__.'/auth.php';
+
