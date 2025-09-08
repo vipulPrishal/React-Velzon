@@ -233,6 +233,10 @@ Route::middleware('auth')->group(function () {
                 'component' => 'VipulPage/index'
             ]);
         });
+
+        // API route for lead data
+        Route::get('/api/lead-data', 'getLeadData');
+
     });
 });
 

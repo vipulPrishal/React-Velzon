@@ -938,4 +938,11 @@ class VelzonRoutesController extends Controller
     {
         return Inertia::render('Auth/user-profile');
     }
+
+        // API method for lead data
+        public function getLeadData()
+        {
+            $leads = \App\Models\LeadData::all();
+            return response()->json($leads);
+        }
 }
