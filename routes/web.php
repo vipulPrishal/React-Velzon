@@ -236,6 +236,8 @@ Route::middleware('auth')->group(function () {
 
         // API route for lead data
         Route::get('/api/lead-data', 'getLeadData');
+        // Adde this post route to add data to the database
+        Route::post('/api/lead-data', [VelzonRoutesController::class, 'addLeadData']);
 
     });
 });

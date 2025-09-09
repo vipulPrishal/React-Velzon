@@ -978,7 +978,20 @@ const CrmLeads = () => {
     //         toast.error("Error adding lead");
     //     }
     // };
-
+    const addLeadData = async (formData: any) => {
+        try {
+            console.log("Sending data:", formData); // Add this line
+            const response = await axios.post("/api/lead-data", formData);
+            // Refresh the data
+            const updatedResponse = await axios.get("/api/lead-data");
+            setLeadData(updatedResponse.data);
+            setModal(false);
+            toast.success("Lead added successfully!");
+        } catch (error) {
+            console.error("Error adding lead:", error);
+            toast.error("Error adding lead");
+        }
+    };
     // validation
     const validation: any = useFormik({
         // enableReinitialize : use this flag when initial values needs to be changed
@@ -1032,7 +1045,7 @@ const CrmLeads = () => {
                     tags: assignTag,
                 };
                 // save new Lead
-                dispatch(onAddNewLead(newLead));
+                // dispatch(onAddNewLead(newLead));
 
                 // Convert to your lead_data format
                 // const leadDataFormat = {
@@ -1061,8 +1074,35 @@ const CrmLeads = () => {
                 //     lead_image:
                 //         "profile" + Math.floor(Math.random() * 100) + ".jpg",
                 // };
-
-                // addLeadData(leadDataFormat);
+                const leadDataFormat = {
+                    first_name: values.name ? values.name.split(" ")[0] : "",
+                    last_name: values.name
+                        ? values.name.split(" ").slice(1).join(" ")
+                        : "",
+                    email: "test@example.com", // Default email
+                    phone: values.phone || "",
+                    city: values.location ? values.location.split(",")[0] : "",
+                    state: values.location ? values.location.split(",")[1] : "",
+                    country: values.location
+                        ? values.location.split(",")[2]
+                        : "USA",
+                    lead_source: "Manual Entry",
+                    custom_1: values.company || "",
+                    address_score:
+                        values.score || Math.floor(Math.random() * 50) + 50,
+                    join_date: new Date().toISOString().split("T")[0],
+                    is_valid_email: true,
+                    is_valid_phone: true,
+                    tcpa_consent: true,
+                    dnc_flag: false,
+                    do_not_call: false,
+                    do_not_text: false,
+                    do_not_contact: false,
+                    is_enriched: false,
+                    lead_image:
+                        "profile" + Math.floor(Math.random() * 100) + ".jpg",
+                };
+                addLeadData(leadDataFormat);
                 validation.resetForm();
             }
             toggle();

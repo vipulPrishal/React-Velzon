@@ -945,4 +945,11 @@ class VelzonRoutesController extends Controller
             $leads = \App\Models\LeadData::all();
             return response()->json($leads);
         }
+
+
+        // //  addded this ....when adding the data in the table vipul added in Crm apps table)
+        public function addLeadData(Request $request) {
+            $lead = \App\Models\LeadData::create($request->all());
+            return response()->json($lead);
+        }
 }
